@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <script src="./two/two.js"></script>
+        <script src="./tree.js"></script>
+    </head>
+    <body>
+        <div id="draw-shapes"></div>
+        <script>
+            // Make an instance of two and place it on the page.
+            var elem = document.getElementById('draw-shapes');
+            var params = { width: '100%', height: '100%' , fullscreen: true};
+            var two = new Two(params).appendTo(elem);
+
+
+            var trunk = two.makeRoundedRectangle(150, 150, 30, 30, 2);
+            // The object returned has many stylable properties:
+            trunk.fill = '#694b37';
+            trunk.stroke = '#694b37'; // Accepts all valid css color
+            trunk.linewidth = 10;
+            trunk.opacity = 1;     
+
+            var group = two.makeGroup(trunk);
+  
+
+            for(var i =0; i< smallTree.numLeaves; i++)
+            {
+                var circ = two.makeCircle(150+((Math.random()*100)-50), 150+((Math.random()*100)-50), ((Math.random()*smallTree.averageLeafSize)+5));
+                circ.fill = '#71b637';
+                circ.stroke = '#478a0b'; // Accepts all valid css color
+                circ.linewidth = 5;
+                circ.opacity = 0.4;
+                group.add(circ);
+            }
+            
+
+            console.log(group.getBoundingClientRect(false));
+            var boundBox = two.makeRectangle((group.getBoundingClientRect(false).left+group.getBoundingClientRect(false).right)/2,(group.getBoundingClientRect(false).top + group.getBoundingClientRect(false).bottom)/2,group.getBoundingClientRect(false).width,group.getBoundingClientRect(false).height,2);
+            boundBox.noFill();
+            boundBox.stroke = 'red';
+            // Don't forget to tell two to render everything
+            // to the screen
+            two.update();    
+        </script>
+        
+
+        </div>
+    </body>
+</html>
