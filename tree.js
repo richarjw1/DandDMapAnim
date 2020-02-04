@@ -2,14 +2,18 @@
 var bigTree = {
     numLeaves: '100',
     averageLeafSize: '40',
+    minLeafSize: '35',
+    maxLeafSize: '55',
     maxRadius: '250',
     baseColor: '#aaaaaa',
     maxLeafHeight: '5',
     minLeafHeight: '3'
 };
 var smallTree = {
-    numLeaves: '30',
-    averageLeafSize: '30',
+    numLeaves: '70',
+    averageLeafSize: '20',
+    minLeafSize: '25',
+    maxLeafSize: '35',
     maxRadius: '100',
     baseColor: '#aaaaaa',
     maxLeafHeight: '3',
@@ -18,6 +22,8 @@ var smallTree = {
 var bush = {
     numLeaves: '30',
     averageLeafSize: '10',
+    minLeafSize: '5',
+    maxLeafSize: '12',
     maxRadius: '50',
     baseColor: '#aaaaaa',
     maxLeafHeight: '1',

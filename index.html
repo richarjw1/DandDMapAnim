@@ -1,45 +1,66 @@
 <html>
     <head>
-        <script src="./two/two.js"></script>
+        <!--<script src="./two/two.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.6.0/two.js"></script>
         <script src="./tree.js"></script>
+        <script src="./weather.js"></script>
+        <script src="./functions.js"></script>
     </head>
     <body>
         <div id="draw-shapes"></div>
         <script>
+
             // Make an instance of two and place it on the page.
             var elem = document.getElementById('draw-shapes');
-            var params = { width: '100%', height: '100%' , fullscreen: true};
+            var params = { width: '100%', height: '100%' , fullscreen: true, autostart: true};
             var two = new Two(params).appendTo(elem);
 
+            var treeCenterX = 150;
+            var treeCenterY = 150
 
-            var trunk = two.makeRoundedRectangle(150, 150, 30, 30, 2);
+            var trunk = two.makeRoundedRectangle(treeCenterX, treeCenterY, 15, 15, 2);
             // The object returned has many stylable properties:
             trunk.fill = '#694b37';
             trunk.stroke = '#694b37'; // Accepts all valid css color
             trunk.linewidth = 10;
             trunk.opacity = 1;     
 
-            var group = two.makeGroup(trunk);
+            var treeGroup = two.makeGroup(trunk);
   
-
+            //Adding leaves onto the tree
             for(var i =0; i< smallTree.numLeaves; i++)
             {
-                var circ = two.makeCircle(150+((Math.random()*100)-50), 150+((Math.random()*100)-50), ((Math.random()*smallTree.averageLeafSize)+5));
+                //variation in leaf size from the pre set values
+                var leafSize = ((Math.random()*smallTree.averageLeafSize))
+                                        //Centre of Tree + random variation   , Same again                          , 
+
+                //Big leaves are closer, at an angle and a distance from the center, smaller leaves at the edges
+                var circ = two.makeCircle(treeCenterX+(randomBetween(0,smallTree.maxRadius)-smallTree.maxRadius/2), treeCenterY+((Math.random()*100)-50), leafSize);
                 circ.fill = '#71b637';
                 circ.stroke = '#478a0b'; // Accepts all valid css color
-                circ.linewidth = 5;
-                circ.opacity = 0.4;
-                group.add(circ);
+                circ.linewidth = 3;
+                circ.opacity = 0.15;
+                treeGroup.add(circ);
             }
             
-
-            console.log(group.getBoundingClientRect(false));
-            var boundBox = two.makeRectangle((group.getBoundingClientRect(false).left+group.getBoundingClientRect(false).right)/2,(group.getBoundingClientRect(false).top + group.getBoundingClientRect(false).bottom)/2,group.getBoundingClientRect(false).width,group.getBoundingClientRect(false).height,2);
+            //Drawing red box around the tree
+            console.log(treeGroup.getBoundingClientRect(false));
+            var boundBox = two.makeRectangle((treeGroup.getBoundingClientRect(false).left+treeGroup.getBoundingClientRect(false).right)/2,(treeGroup.getBoundingClientRect(false).top + treeGroup.getBoundingClientRect(false).bottom)/2,treeGroup.getBoundingClientRect(false).width,treeGroup.getBoundingClientRect(false).height,2);
             boundBox.noFill();
             boundBox.stroke = 'red';
+            treeGroup.add(boundBox);
             // Don't forget to tell two to render everything
             // to the screen
-            two.update();    
+            //
+            treeGroup.translation.set(0, 0);
+            var circ = two.makeCircle(treeCenterX, treeCenterY, 5);
+            circ.fill ='red';
+            two.update();
+            two.bind('update', function(frameCount, timeDelta) {
+                //                                          speed, amplitude
+                treeGroup.translation.set(Math.abs(Math.sin(frameCount/100)*wind.eastWestSpeed), Math.abs(Math.sin(frameCount/100)*wind.northSouthSpeed));
+            });
+            
         </script>
         
 

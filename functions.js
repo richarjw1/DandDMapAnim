@@ -1,0 +1,4 @@
+"use strict";
+function randomBetween(min, max) {
+    return min + Math.random() * (max - min);
+}
