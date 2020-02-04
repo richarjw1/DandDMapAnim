@@ -1,5 +1,5 @@
 "use strict";
 var wind = {
-    northSouthSpeed: '5',
+    northSouthSpeed: '0',
     eastWestSpeed: '10'
 };
