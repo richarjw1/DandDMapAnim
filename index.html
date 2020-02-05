@@ -29,63 +29,97 @@
             trunkBase.stroke = '#50392a'; // Accepts all valid css color
             trunkBase.linewidth = 10;
 
-            var treeGroup = two.makeGroup(trunk);
+            var trunk1 = two.makeRoundedRectangle(treeCenterX, treeCenterY, 11, 11, 2);
+            trunk1.fill = '#50392a';
+            trunk1.stroke = '#50392a'; // Accepts all valid css color
+            trunk1.linewidth = 10;
+
+            var treeGroup = new Two.Group(); 
             var treeGroup1 = new Two.Group();
             var treeGroup2 = new Two.Group();
+            two.add(treeGroup);
             two.add(treeGroup1);
             two.add(treeGroup2);
             
+            treeGroup1.add(trunk1)
+            treeGroup2.add(trunk);
+            
+            var treeArray = [treeGroup, treeGroup1, treeGroup2, 0.56];
+            for (const element of treeArray) {
+                console.log(element);
+            }
             
             //Adding leaves onto the tree
             for(var i =0; i< smallTree.numLeaves; i++)
             {
                 //variation in leaf size from the pre set values
-                var leafSize = ((Math.random()*smallTree.averageLeafSize))
+                var leafSize = ((Math.random()*smallTree.averageLeafSize));
+                var leafSize = randomBetween(smallTree.averageLeafSize/4,smallTree.averageLeafSize)
                                         //Centre of Tree + random variation   , Same again                          , 
 
                 //Big leaves are closer, at an angle and a distance from the center, smaller leaves at the edges
-                var circ = two.makeCircle(treeCenterX+(randomBetween(0,smallTree.maxRadius)-smallTree.maxRadius/2), treeCenterY+((Math.random()*100)-50), leafSize);
+                var circ = two.makeCircle(treeCenterX+(randomBetween(0,smallTree.maxRadius)-smallTree.maxRadius/2), treeCenterY+(randomBetween(0,smallTree.maxRadius)-smallTree.maxRadius/2), leafSize);
                 circ.fill = '#71b637';
                 circ.stroke = '#478a0b'; // Accepts all valid css color
                 circ.linewidth = 3;
-                circ.opacity = 0.15;
+                circ.opacity = smallTree.leafOpacity;
                 treeGroup.add(circ);
             }
-            for(var i =0; i< smallTree.numLeaves/3; i++)
-            {
-                //variation in leaf size from the pre set values
-                var leafSize = ((Math.random()*smallTree.averageLeafSize))
-                                        //Centre of Tree + random variation   , Same again                          , 
-
-                //Big leaves are closer, at an angle and a distance from the center, smaller leaves at the edges
-                var circ = two.makeCircle(treeCenterX+(randomBetween(0,smallTree.maxRadius)-smallTree.maxRadius/2), treeCenterY+((Math.random()*100)-50), leafSize/2);
-                circ.fill = '#71b637';
-                circ.stroke = '#478a0b'; // Accepts all valid css color
-                circ.linewidth = 3;
-                circ.opacity = 0.15;
-                treeGroup1.add(circ);
-            }
-            for(var i =0; i< smallTree.numLeaves/3; i++)
-            {
-                //variation in leaf size from the pre set values
-                var leafSize = ((Math.random()*smallTree.averageLeafSize))
-                                        //Centre of Tree + random variation   , Same again                          , 
-
-                //Big leaves are closer, at an angle and a distance from the center, smaller leaves at the edges
-                var circ = two.makeCircle(treeCenterX+(randomBetween(0,smallTree.maxRadius)-smallTree.maxRadius/2), treeCenterY+((Math.random()*100)-50), leafSize/3);
-                circ.fill = '#71b637';
-                circ.stroke = '#478a0b'; // Accepts all valid css color
-                circ.linewidth = 3;
-                circ.opacity = 0.15;
-                treeGroup2.add(circ);
-            }
-            
-            //Drawing red box around the tree
+            //Drawing red box around the outer tree
             console.log(treeGroup.getBoundingClientRect(false));
             var boundBox = two.makeRectangle((treeGroup.getBoundingClientRect(false).left+treeGroup.getBoundingClientRect(false).right)/2,(treeGroup.getBoundingClientRect(false).top + treeGroup.getBoundingClientRect(false).bottom)/2,treeGroup.getBoundingClientRect(false).width,treeGroup.getBoundingClientRect(false).height,2);
             boundBox.noFill();
             boundBox.stroke = 'red';
             treeGroup.add(boundBox);
+
+            for(var i =0; i< smallTree.numLeaves/3; i++)
+            {
+                //variation in leaf size from the pre set values
+                var leafSize = ((Math.random()*smallTree.averageLeafSize))
+                                        //Centre of Tree + random variation   , Same again                          , 
+
+                //Big leaves are closer, at an angle and a distance from the center, smaller leaves at the edges
+                var circ = two.makeCircle(treeCenterX+(randomBetween(0,smallTree.maxRadius/1.5)-smallTree.maxRadius/3), treeCenterY+(randomBetween(0,smallTree.maxRadius/1.5)-smallTree.maxRadius/3), leafSize/1.5);
+                circ.fill = '#71b637';
+                circ.stroke = '#478a0b'; // Accepts all valid css color
+                circ.linewidth = 3;
+                circ.opacity = parseFloat(smallTree.leafOpacity,10)+0.1;
+                treeGroup1.add(circ);
+            }
+            console.log(parseFloat(smallTree.leafOpacity,10)+0.1)
+
+            //Drawing red box around the outer tree
+            console.log(treeGroup1.getBoundingClientRect(false));
+            var boundBox1 = two.makeRectangle((treeGroup1.getBoundingClientRect(false).left+treeGroup1.getBoundingClientRect(false).right)/2,(treeGroup1.getBoundingClientRect(false).top + treeGroup1.getBoundingClientRect(false).bottom)/2,treeGroup1.getBoundingClientRect(false).width,treeGroup1.getBoundingClientRect(false).height,2);
+            boundBox1.noFill();
+            boundBox1.stroke = 'red';
+            treeGroup1.add(boundBox1);
+
+            for(var i =0; i< smallTree.numLeaves/3; i++)
+            {
+                //variation in leaf size from the pre set values
+                var leafSize = ((Math.random()*smallTree.averageLeafSize))
+                                        //Centre of Tree + random variation   , Same again                          , 
+
+                //Big leaves are closer, at an angle and a distance from the center, smaller leaves at the edges
+                var circ = two.makeCircle(treeCenterX+(randomBetween(0,smallTree.maxRadius/4)-smallTree.maxRadius/8), treeCenterY+(randomBetween(0,smallTree.maxRadius/4)-smallTree.maxRadius/8), leafSize/3);
+                circ.fill = '#71b637';
+                circ.stroke = '#478a0b'; // Accepts all valid css color
+                circ.linewidth = 3;
+                circ.opacity = parseFloat(smallTree.leafOpacity,10)+0.2;
+                treeGroup2.add(circ);
+            }
+            
+            //Drawing red box around the outer tree
+            console.log(treeGroup2.getBoundingClientRect(false));
+            var boundBox2 = two.makeRectangle((treeGroup2.getBoundingClientRect(false).left+treeGroup2.getBoundingClientRect(false).right)/2,(treeGroup2.getBoundingClientRect(false).top + treeGroup2.getBoundingClientRect(false).bottom)/2,treeGroup2.getBoundingClientRect(false).width,treeGroup2.getBoundingClientRect(false).height,2);
+            boundBox2.noFill();
+            boundBox2.stroke = 'red';
+            treeGroup2.add(boundBox2);
+
+
+
+
             // Don't forget to tell two to render everything
             // to the screen
             //
@@ -93,11 +127,13 @@
             //var circ = two.makeCircle(treeCenterX, treeCenterY, 5);
             //circ.fill ='red';
             two.update();
+            //Removed Math.Abs to make more natural movement
             two.bind('update', function(frameCount, timeDelta) {
                 //                                                    speed, amplitude
-                treeGroup.translation.set(Math.abs(Math.sin(frameCount/100)*wind.eastWestSpeed), Math.abs(Math.sin(frameCount/100)*wind.northSouthSpeed));
-                treeGroup1.translation.set(Math.abs(Math.sin(frameCount/100)*(wind.eastWestSpeed*2)), Math.abs(Math.sin(frameCount/100)*(wind.northSouthSpeed*1.5)));
-                treeGroup2.translation.set(Math.abs(Math.sin(frameCount/100)*(wind.eastWestSpeed*4)), Math.abs(Math.sin(frameCount/100)*(wind.northSouthSpeed*2)));
+                var sinOfTime = Math.sin(frameCount/100);
+                treeGroup.translation.set(/*Math.Abs*/((sinOfTime*wind.eastWestSpeed)+0.1), ((sinOfTime*wind.northSouthSpeed)+0.1));
+                treeGroup1.translation.set(((sinOfTime*(wind.eastWestSpeed*1.5)+0.0)-2), ((sinOfTime*(wind.northSouthSpeed*1.5)+0.0)));
+                treeGroup2.translation.set(((sinOfTime*(wind.eastWestSpeed*2)+0.0)-4), ((sinOfTime*(wind.northSouthSpeed*2))+0.0));
             });
             
         </script>
