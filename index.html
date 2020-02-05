@@ -45,11 +45,14 @@
             treeGroup2.add(trunk);
             
             var treeArray = [treeGroup, treeGroup1, treeGroup2, 0.56];
+
+            var floraArray = [treeArray];
             for (const element of treeArray) {
                 console.log(element);
             }
             
             //Adding leaves onto the tree
+
             for(var i =0; i< smallTree.numLeaves; i++)
             {
                 //variation in leaf size from the pre set values
@@ -66,11 +69,13 @@
                 treeGroup.add(circ);
             }
             //Drawing red box around the outer tree
-            console.log(treeGroup.getBoundingClientRect(false));
+           /* console.log(treeGroup.getBoundingClientRect(false));
             var boundBox = two.makeRectangle((treeGroup.getBoundingClientRect(false).left+treeGroup.getBoundingClientRect(false).right)/2,(treeGroup.getBoundingClientRect(false).top + treeGroup.getBoundingClientRect(false).bottom)/2,treeGroup.getBoundingClientRect(false).width,treeGroup.getBoundingClientRect(false).height,2);
             boundBox.noFill();
             boundBox.stroke = 'red';
-            treeGroup.add(boundBox);
+            treeGroup.add(boundBox);*/
+
+            
 
             for(var i =0; i< smallTree.numLeaves/3; i++)
             {
@@ -89,11 +94,11 @@
             console.log(parseFloat(smallTree.leafOpacity,10)+0.1)
 
             //Drawing red box around the outer tree
-            console.log(treeGroup1.getBoundingClientRect(false));
+           /* console.log(treeGroup1.getBoundingClientRect(false));
             var boundBox1 = two.makeRectangle((treeGroup1.getBoundingClientRect(false).left+treeGroup1.getBoundingClientRect(false).right)/2,(treeGroup1.getBoundingClientRect(false).top + treeGroup1.getBoundingClientRect(false).bottom)/2,treeGroup1.getBoundingClientRect(false).width,treeGroup1.getBoundingClientRect(false).height,2);
             boundBox1.noFill();
             boundBox1.stroke = 'red';
-            treeGroup1.add(boundBox1);
+            treeGroup1.add(boundBox1);*/
 
             for(var i =0; i< smallTree.numLeaves/3; i++)
             {
@@ -111,14 +116,14 @@
             }
             
             //Drawing red box around the outer tree
-            console.log(treeGroup2.getBoundingClientRect(false));
+           /* console.log(treeGroup2.getBoundingClientRect(false));
             var boundBox2 = two.makeRectangle((treeGroup2.getBoundingClientRect(false).left+treeGroup2.getBoundingClientRect(false).right)/2,(treeGroup2.getBoundingClientRect(false).top + treeGroup2.getBoundingClientRect(false).bottom)/2,treeGroup2.getBoundingClientRect(false).width,treeGroup2.getBoundingClientRect(false).height,2);
             boundBox2.noFill();
             boundBox2.stroke = 'red';
-            treeGroup2.add(boundBox2);
+            treeGroup2.add(boundBox2);*/
 
-
-
+           
+            treeArray[1].translation.set(500,500);
 
             // Don't forget to tell two to render everything
             // to the screen
@@ -131,9 +136,13 @@
             two.bind('update', function(frameCount, timeDelta) {
                 //                                                    speed, amplitude
                 var sinOfTime = Math.sin(frameCount/100);
-                treeGroup.translation.set(/*Math.Abs*/((sinOfTime*wind.eastWestSpeed)+0.1), ((sinOfTime*wind.northSouthSpeed)+0.1));
-                treeGroup1.translation.set(((sinOfTime*(wind.eastWestSpeed*1.5)+0.0)-2), ((sinOfTime*(wind.northSouthSpeed*1.5)+0.0)));
-                treeGroup2.translation.set(((sinOfTime*(wind.eastWestSpeed*2)+0.0)-4), ((sinOfTime*(wind.northSouthSpeed*2))+0.0));
+                for(var j = 0; j < treeArray.length-1; j++)
+                {
+
+                    treeArray[j].translation.set(((sinOfTime*wind.eastWestSpeed*(j+1))-(j)), ((sinOfTime*wind.northSouthSpeed*(j+1))-(j)));
+                    //treeGroup1.translation.set(((sinOfTime*(wind.eastWestSpeed*1.5)+0.0)-2), ((sinOfTime*(wind.northSouthSpeed*1.5)+0.0)));
+                    //treeGroup2.translation.set(((sinOfTime*(wind.eastWestSpeed*2)+0.0)-4), ((sinOfTime*(wind.northSouthSpeed*2))+0.0));
+                }
             });
             
         </script>

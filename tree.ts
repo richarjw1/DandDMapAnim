@@ -11,7 +11,7 @@ var bigTree = {
  };
 
  var smallTree = {
-    numLeaves:'50',
+    numLeaves:'70',
     averageLeafSize:'20',
     minLeafSize:'25',
     maxLeafSize:'35',
